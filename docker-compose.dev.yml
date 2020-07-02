@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  auth:
+    command: npm run dev
+    volumes:
+    - ./auth/src:/usr/src/app/src

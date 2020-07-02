@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+  auth:
+    build:
+      ./auth
+    container_name: docker-mean-auth
+    command: npm run start
+    ports:
+    - "3003:3003"
+    environment:
+      - PORT=3003
+      - DB_URL=mongodb://auth_db:27017/auth
+      - API_URL=someApiTemp
+    depends_on:
+      - auth_db
+    networks:
+      - docker-mean-network-auth
+
+
+  auth_db:
+    image: mongo:4.4.0-rc11-bionic
+    container_name: docker-mean-auth-db
+    volumes:
+    - auth_db_volume:/data/db
+    networks:
+      - docker-mean-network-auth
+
+
+volumes:
+  auth_db_volume:
+
+
+networks:
+  docker-mean-network-auth:
+    driver: bridge
+
+
